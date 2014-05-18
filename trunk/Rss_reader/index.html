@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Rss Reader By Kai Jiang</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+
+        </style>
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/jquery-ui.css">
+        <script src="./javascript/jquery-1.4.2.js"></script>
+        <script src="./javascript/jquery-ui.js"></script>
+        <script src="./javascript/functions.js"></script>
+
+        
+     
+    </head>
+    <body>
+        <img id="logo" src="./images/logo.png" />
+        <div id="main">
+            <div id="left">
+                <div id="left_1" class="left_div">
+                    <img id="loading" src="./images/loading.gif" />
+                    <div id="error"></div>
+                    <div id="user_panel"></div>
+                    <div id='login'>
+                        username:<input type="text" id="username_login" name="username" />
+                        <br />
+                        password:<input type="text" id="password_login" name="password" />
+                        <br />
+                        <br />
+                        <input type="hidden" name="action" value="login" />
+                        <input type="button" id="loginbutton" value="Login" />  <input type="button" id="registerlink" value="Register" />
+                    </div>
+                    <div id='register'>
+                        username:<input type="text" id="username_register" name="username" />
+                        <br />
+                        password:<input type="text" id="password_register" name="password" />
+                        <br />
+                        <br />
+                        <input type="hidden" name="action" value="register" />
+                        <input type="button" id="registerbutton" value="register" /> <input type="button" id="backLogin" value="Go back" /> 
+                    </div>
+                </div>
+
+                <div id="feedlist" class="left_div">left_3</div>
+            </div>
+            <div id="right">
+                <img id="rssloading" src="./images/rssloading.gif" />
+                <div id="rsscontentlist">
+                    
+                   
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        <div id='addFeedForm'>
+            Feed Name:<input type="text" id="newFeedName" name="newFeedName" />
+            <br />
+            Feed URL:<input type="text" id="newFeedURL" name="newFeedName" />
+            <br />
+            <input type="button" id="addfeedbutton" value="Add" /><input type="button" id="closefeedbutton" value="Cancel" />
+        </div>
+
+
+
+    </body>
+</html>
+
+
+
+
