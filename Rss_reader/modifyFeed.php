@@ -8,8 +8,8 @@ if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST" && isse
     $user->password = $_SESSION['password'];
     $feedname = $_POST['feedname'];
     $feedurl = $_POST['feedurl'];
-    $newfeedname = $_POST['newfeedname'];
-    $newfeedurl = $_POST['newfeedurl'];
+    $newfeedname = trim($_POST['newfeedname']);
+    $newfeedurl = trim($_POST['newfeedurl']);
     if ($user->updateFeed($feedname, $feedurl, $newfeedname, $newfeedurl)) {
         echo "Feed updated successfully";
     } else {
