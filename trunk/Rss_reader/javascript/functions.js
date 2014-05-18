@@ -3,6 +3,41 @@ var loading = false;
 $(function() {
     initializeApp();
 });
+function initializeApp() {
+    $("#error").html("");
+    $("#feedlist").html("");
+    $("#loginbutton").click(function() {
+        $("#error").html("");
+        username = $("#username_login").val();
+        password = $("#password_login").val();
+        login(username, password);
+    });
+    $("#registerbutton").click(function() {
+        $("#error").html("");
+        username = $("#username_register").val();
+        password = $("#password_register").val();
+        register(username, password);
+    });
+    $("#registerlink").click(function() {
+        $("#error").html("");
+        $("#login").hide();
+        $("#register").show();
+    });
+    $("#backLogin").click(function() {
+        $("#error").html("");
+        $("#login").show();
+        $("#register").hide();
+    });
+    $("#user_panel").hide();
+    $("#login").hide();
+    $("#register").hide();
+    $("#rssloading").hide();
+    //addLogoutListener();
+    //addNewFeedListener();
+    addNewFeedFormListener();
+    refreshPage();
+    $("#addFeedForm").dialog({modal: true, autoOpen: false});
+}
 function register(username, password) {
     $("#register").hide();
     $("#loading").show();
@@ -61,40 +96,7 @@ function retriveData(data) {
         $("#error").html(response.info);
     }
 }
-function initializeApp() {
-    $("#error").html("");
-    $("#feedlist").html("");
-    $("#loginbutton").click(function() {
-        $("#error").html("");
-        username = $("#username_login").val();
-        password = $("#password_login").val();
-        login(username, password);
-    });
-    $("#registerbutton").click(function() {
-        $("#error").html("");
-        username = $("#username_register").val();
-        password = $("#password_register").val();
-        register(username, password);
-    });
-    $("#registerlink").click(function() {
-        $("#error").html("");
-        $("#login").hide();
-        $("#register").show();
-    });
-    $("#backLogin").click(function() {
-        $("#error").html("");
-        $("#login").show();
-        $("#register").hide();
-    });
-    $("#user_panel").hide();
-    $("#login").hide();
-    $("#register").hide();
-    $("#rssloading").hide();
-    
-    addNewFeedFormListener();
-    refreshPage();
-    $("#addFeedForm").dialog({modal: true, autoOpen: false});
-}
+
 
 
 

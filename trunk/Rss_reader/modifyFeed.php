@@ -10,7 +10,10 @@ if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST" && isse
     $feedurl = $_POST['feedurl'];
     $newfeedname = trim($_POST['newfeedname']);
     $newfeedurl = trim($_POST['newfeedurl']);
-    if ($user->updateFeed($feedname, $feedurl, $newfeedname, $newfeedurl)) {
+    if(empty($newfeedname)||empty($newfeedname)){
+        echo "Do input empty name and feed url";
+    }
+    else if ($user->updateFeed($feedname, $feedurl, $newfeedname, $newfeedurl)) {
         echo "Feed updated successfully";
     } else {
         echo "Can't update the feed, please try later";

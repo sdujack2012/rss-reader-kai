@@ -24,7 +24,7 @@ class User {
         if (!$this->dbConnected()) {
             $this->dbconnection = getDatabaseConnection();
         }
-        $stmt = $this->dbconnection->prepare("select username from users where username=? and password=?");
+        $stmt = $this->dbconnection->prepare("select username from rss_user where username=? and password=?");
         $stmt->bind_param('ss', $this->username, md5($this->password));
         $stmt->execute();
         if ($stmt->fetch()) {
@@ -104,7 +104,7 @@ class User {
         if ($this->isValid()) {
             return 0;
         } else {
-            $stmt = $this->dbconnection->prepare("insert into users values(?,?)");
+            $stmt = $this->dbconnection->prepare("insert into rss_user values(?,?)");
 
             $stmt->bind_param('ss', $this->username, md5($this->password));
             $stmt->execute();
