@@ -8,8 +8,8 @@ if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST" && isse
     $user->username = $_SESSION['username'];
     $user->password = $_SESSION['password'];
    
-    $feedname = $_POST['feedname'];
-    $feedurl = $_POST['feedurl'];
+    $feedname = trim($_POST['feedname']);
+    $feedurl = trim($_POST['feedurl']);
     $feed = new Feed($feedurl,$feedname);
     if ($user->addFeeds($feed)) {
         echo "Feed added";

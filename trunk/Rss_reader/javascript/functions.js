@@ -132,6 +132,8 @@ function addNewFeedFormListener() {
                 success: function(data) {
                     alert(data);
                     $("#addFeedForm").dialog("close");
+                    $("#newFeedName").val("");
+                    $("#newFeedURL").val("");
                     refreshPage();
                 }
             });
@@ -159,7 +161,7 @@ function modifyFeed(feedname, feedurl, name_id, url_id) {
         data: "feedname=" + feedname + "&feedurl=" + feedurl + "&newfeedname=" + newfeedname + "&newfeedurl=" + newfeedurl,
         success: function(data) {
             alert(data);
-            refreshPage();
+            
         }
     });
 }
@@ -183,7 +185,6 @@ function readRss(url_id) {
     var timer = setTimeout(function(){
         ajax.abort(); 
         loading = false;
-        clearTimeout(this); 
         $("#rssloading").hide();
         alert("Request Timeout");
     },
