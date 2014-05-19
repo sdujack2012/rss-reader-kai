@@ -118,12 +118,9 @@ table#feeds{
 
 }
 #rsscontentlist{
-
     width: 100%;
     height:100%;
-
     border-right: 2px solid skyblue;
-
     overflow-y:scroll;
     overflow-x: visible;
     -moz-border-radius: 0 15px 0 0 ;
@@ -131,7 +128,6 @@ table#feeds{
     -ms-border-radius: 0 15px 0 0 ;
     -o-border-radius: 0 15px 0 0 ;
     border-radius: 0 15px 0 0 ;
-
 }
 
 
@@ -180,6 +176,14 @@ table#feedinfo tr td{
 }
 #loadingfeedlist{
     position: absolute;
-    top: 55%;
-    left: 10%;
+    top: 30%;
+    left: 30%;
+
+}
+
+#cover{
+    z-index:9999999;
+    width: 300px;
+    position: absolute;
+    background: rgba(0,0,0,0.1);
 }
