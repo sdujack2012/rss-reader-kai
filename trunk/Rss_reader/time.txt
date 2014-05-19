@@ -1,0 +1,17 @@
+1. I like thinking before I proceed to coding. So I pictured the rss reader application in my mind and later I decided to create a dynamic and responsive web application. And personally, I like some thing with clear mvc frame work so I would try to separate view from back end code.(1 hour)
+
+2. Then inevitably, ajax must be extensively used in my application and for a better data exchange json format data should also be used considerably. Then even though I used them before but I was not so familiar with ajax and json so I started to do some basic research about them.(20 mins)
+
+3. After that, I began to create sql to create tables needed. I used two tables rss_user which contains username and password and user_feed which consists of username referencing username in table rss_user, feedname and feed url. They should be enough to represent the meaningful relationship between a user and his or her feeds.(10 mins)
+
+4. Then I wrote two php class user.php and feed.php to map data from database table. And then test them. (1 hours)
+
+5. Next, I started to implement a rss xml parsing class RssReader.php. I did a lot of research and found it could be easily resolved with native php object xml parser. (1 hour)
+
+6. After resting for a day, I spent some time wroting a config reader class mainly for the convenience of storing a database configuration in a plain text file and retrieving database information from it when database access is needed.(lost count)
+
+7. Actually, I don’t explicitly specify which files are model but I should say the about php classes were my models.
+
+8. Then I started to build graphic use interface. Lots of Html, css, and javascript. The procedure was too painful. (time spent on it? Well hours, lost count again.)
+
+9. You may notice I didn’t do too much test. Well, firstly that’s because the application development went too smoothly and also because my phpunit didn’t work for no reaseon. Ultimately, I was too lazy.
