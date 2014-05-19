@@ -3,13 +3,16 @@
 include 'Functions.php';
 
 $db = getDatabaseConnection();
-$stmt = $db->prepare("DROP TABLE IF EXISTS rss_user;");
-$stmt->execute();
-$stmt->close();
 
 $stmt = $db->prepare("DROP TABLE IF EXISTS user_feed;");
 $stmt->execute();
 $stmt->close();
+
+$stmt = $db->prepare("DROP TABLE IF EXISTS rss_user;");
+$stmt->execute();
+$stmt->close();
+
+
 
 $stmt = $db->prepare("create table rss_user(
     username varchar (50) primary key,
