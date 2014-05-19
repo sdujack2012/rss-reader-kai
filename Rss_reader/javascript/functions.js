@@ -165,22 +165,28 @@ function addNewFeedFormListener() {
 
 
 function modifyFeed(feedname, feedurl, name_id, url_id,img_id) {
-
     var newfeedname = $("#" + name_id).val();
     var newfeedurl = $("#" + url_id).val();
+    if(!isURL(newfeedurl)){
+        alert("Dont input invalid url");
+        refreshPage();
+        return;
+    }
     $("#" + img_id).show();
     $.ajax({
         type: "post",
         url: "modifyFeed.php",
         data: "feedname=" + feedname + "&feedurl=" + feedurl + "&newfeedname=" + newfeedname + "&newfeedurl=" + newfeedurl,
-        complete: function(data) {
+        error: function(data) {
+            
             $("#" + img_id).hide();
              
         },
         success: function(data) {
-            
             $("#" + img_id).hide();
             alert(data);
+            refreshPage();
+            
         }
         
         
@@ -252,7 +258,7 @@ function refreshPage() {
 
 function isURL(str) {
     //regular expression to check if a given string is valid url
-    var Exp = /http(s)?:////([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;  
+    var Exp = /^http(s)?:////([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;  
     var objExp = new RegExp(Exp);
     if (objExp.test(str) == true) {
         return true;
