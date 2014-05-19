@@ -194,10 +194,9 @@ function deleteFeed(feedname, feedurl) {
             url: "deleteFeed.php",
             data: "feedname=" + feedname + "&feedurl=" + feedurl,
             success: function(data) {
-               
                 refreshPage();
             },
-            complete: function(data) {
+            error: function(data) {
                $("#loadingfeedlist").hide();
             }
         });
@@ -270,7 +269,7 @@ function renderRss(data) {
         for (var i = 0; i < response.length; i++) {
             feedinfo += "<tr><td>";
             feedinfo += "<div class='title'>"+response[i].title+"</div>";
-            feedinfo += "<div class='link' target=‘_blank’><a href='"+response[i].link+"'>"+response[i].link+"</a></div>";
+            feedinfo += "<div class='link'><a  target='_blank' href='"+response[i].link+"'>"+response[i].link+"</a></div>";
             feedinfo += "<div class='description'>"+response[i].description.substr(0,200) +"</div>";
             feedinfo += "<hr />";
             feedinfo += "</td></tr>";
