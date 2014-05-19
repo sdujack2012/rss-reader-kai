@@ -33,7 +33,7 @@ function initializeApp() {
     $("#login").hide();
     $("#register").hide();
     $("#rssloading").hide();
-    $("#loadingfeedlist").hide();
+    $("#cover").hide();
     //addLogoutListener();
     //addNewFeedListener();
     addNewFeedFormListener();
@@ -186,15 +186,12 @@ function modifyFeed(feedname, feedurl, name_id, url_id,img_id) {
             $("#" + img_id).hide();
             alert(data);
             refreshPage();
-            
         }
-        
-        
     });
 }
 function deleteFeed(feedname, feedurl) {
     if(confirm('Do you really want to delete the feed?')){
-        $("#loadingfeedlist").show();
+        $("#cover").show();
         $.ajax({
             type: "post",
             url: "deleteFeed.php",
@@ -203,7 +200,7 @@ function deleteFeed(feedname, feedurl) {
                 refreshPage();
             },
             error: function(data) {
-               $("#loadingfeedlist").hide();
+               $("#cover").hide();
             }
         });
     }
@@ -242,7 +239,7 @@ function readRss(url_id) {
     
 }
 function refreshPage() {
-    $("#loadingfeedlist").show();
+    $("#cover").show();
     $.ajax({
         type: "POST",
         url: "main.php",
@@ -250,7 +247,7 @@ function refreshPage() {
             retriveData(data);
         },
         complete:function(data) {
-            $("#loadingfeedlist").hide();
+            $("#cover").hide();
         }
     });
 }
