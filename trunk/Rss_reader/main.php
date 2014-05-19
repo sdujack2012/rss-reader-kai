@@ -5,6 +5,7 @@ if(!isset($_SESSION['username'])&&$_SERVER['REQUEST_METHOD']=="POST"&&isset($_PO
     $user = new User();
     $user->username = $_POST['username'];
     $user->password = $_POST['password'];
+    //handle login
     if($_POST['action']=='login'){
         if($user->isValid()){
             $_SESSION['username']=$user->username;
@@ -14,7 +15,9 @@ if(!isset($_SESSION['username'])&&$_SERVER['REQUEST_METHOD']=="POST"&&isset($_PO
             $_SESSION['error']='Wrong Username or Password';
         }
     }
+    //handle registeration
     else if($_POST['action']=='register'){
+        //using regular express to valid user name and password
         if (ereg("^([a-zA-Z0-9_-]){8,15}$",$user->username)&&ereg("^([a-zA-Z0-9_-]){8,15}$",$user->password)){ 
             if($user->register()){
                 $_SESSION['username']=$user->username;
@@ -34,19 +37,21 @@ if(isset($_SESSION['username'])){
     $user->username=$_SESSION['username'];
     $user->password=$_SESSION['password'];
    
-    
+    //retrieve feeds owned by the user
     $feedlist = $user->retrieveFeedList();
     
     $response = array();
+    //constructing response
     $response['status'] = "good";
     $info = array();
     $info['username']=$user->username;
     $info['feedlist']=$feedlist;
     $response['info']= $info;
+    //convert the response into a json string and return it to user
     echo json_encode($response);
 }
 else{
-    
+    //deal with error
     $response['status'] = "error";
     $response['info']=isset ($_SESSION['error'])?$_SESSION['error']:"";
     echo json_encode($response);

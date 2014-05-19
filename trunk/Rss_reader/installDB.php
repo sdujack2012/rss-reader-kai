@@ -1,5 +1,5 @@
 <?php
-
+//this is where to start
 include 'Functions.php';
 
 $db = getDatabaseConnection();
