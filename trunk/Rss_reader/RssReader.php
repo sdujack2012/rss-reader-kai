@@ -47,6 +47,11 @@ class RssReader {
         //put the result of parsing into an array
         $rawRssArray=array();
         xml_parse_into_struct($parser, $rawdata, $rawRssArray);
+        //check error
+        if(xml_get_error_code($parser)){
+                return false;
+        }
+        
         //free xml parser    
         xml_parser_free($parser);
         $is_item = 0;
