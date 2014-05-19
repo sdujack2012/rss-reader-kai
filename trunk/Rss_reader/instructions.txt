@@ -1,14 +1,14 @@
 installation instruction
 step1:
 open php.ini your php folder 
-search 'allow_url_fopen' and midify it to allow_url_fopen=On
+search 'allow_url_fopen' and midify it to allow_url_fopen=On if needed
 
 step2:
 open db.config in folder Rss_reader with text editor
-filling your mysql database config
+fill in your mysql database config
 
 step3:
 upload folder  Rss_reader to your web server
-enter http://yourserver/Rss_reader/installDB.php in your browser to set up database tables.
+enter http://rss_reader_path/Rss_reader/installDB.php in your browser to set up database tables.
 
-if everything goes smoothly, you should be able to run the rss reader at http://yourserver/Rss_reader/index.html
+if everything goes smoothly, you should be able to run the rss reader at http://rss_reader_path/Rss_reader/index.html
