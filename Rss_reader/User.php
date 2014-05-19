@@ -40,7 +40,7 @@ class User {
         }
         //retrieve user infomation from database
         $stmt = $this->dbconnection->prepare("select username from rss_user where username=? and password=?");
-        $stmt->bind_param('ss', $this->username, md5($this->password));
+        $stmt->bind_param('ss', $this->username, md5($this->password));//md5 the password for security concern
         $stmt->execute();
         if ($stmt->fetch()) {
             $stmt->close();
@@ -124,7 +124,7 @@ class User {
     }
 
     /**
-     * register a new user
+     * register a new user, md5 the password for security concern
      */
     public function register() {
         if (!$this->dbConnected()) {

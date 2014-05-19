@@ -93,7 +93,7 @@ class RssReader {
      */
     private function getCache() {
         //get raw rss data
-        $encryptedUrl = md5($this->url);
+        $encryptedUrl = md5($this->url); //md5 the url as a cache name
         $cachefile = $this->cacheDir . $encryptedUrl;
         if (file_exists($cachefile) && time() - filemtime($cachefile) < $this->maxCacheTime) {
             return unserialize(file_get_contents($cachefile));
