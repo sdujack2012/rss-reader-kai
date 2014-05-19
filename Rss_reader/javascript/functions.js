@@ -3,6 +3,9 @@ var img=new Image();
 $(function() {
     initializeApp();
 });
+/**
+ * initialize all the resource needed for the application
+ */
 function initializeApp() {
     img.src="./images/updating.gif";
     $("#error").html("");
@@ -40,6 +43,10 @@ function initializeApp() {
     refreshPage();
     $("#addFeedForm").dialog({modal: true, autoOpen: false,height: 180,width:320});
 }
+
+/**
+ * handle user registeration
+ */
 function register(username, password) {
     $("#register").hide();
     $("#loading").show();
@@ -52,6 +59,10 @@ function register(username, password) {
         }
     });
 }
+
+/**
+ * handle user login
+ */
 function login(username, password) {
     $("#login").hide();
     $("#loading").show();
@@ -64,6 +75,10 @@ function login(username, password) {
         }
     });
 }
+
+/**
+ * get feed list in json string from the server and present it to user
+ */
 function retriveData(data) {
     $("#loading").hide();
     try{
@@ -110,7 +125,9 @@ function retriveData(data) {
 
 
 
-
+/**
+ * add click listener to the logout button
+ */
 function addLogoutListener() {
     $("#logout").click(function() {
         $.ajax({
@@ -125,13 +142,19 @@ function addLogoutListener() {
     });
 
 }
-
+/**
+ * add click listener to the 'add new feed' button
+ */
 function addNewFeedListener() {
     $("#addfeed").click(function() {
         $("#addFeedForm").dialog("open");
     });
 
 }
+
+/**
+ * add click listener to elements in 'add New Feed Form'
+ */
 function addNewFeedFormListener() {
     $("#addfeedbutton").click(function() {
 
@@ -163,7 +186,9 @@ function addNewFeedFormListener() {
 
 }
 
-
+/**
+ * handle 'modify feed event'
+ */
 function modifyFeed(feedname, feedurl, name_id, url_id,img_id) {
     var newfeedname = $("#" + name_id).val();
     var newfeedurl = $("#" + url_id).val();
@@ -189,6 +214,10 @@ function modifyFeed(feedname, feedurl, name_id, url_id,img_id) {
         }
     });
 }
+
+/**
+ * handle 'delete feed event'
+ */
 function deleteFeed(feedname, feedurl) {
     if(confirm('Do you really want to delete the feed?')){
         $("#cover").show();
@@ -205,6 +234,10 @@ function deleteFeed(feedname, feedurl) {
         });
     }
 }
+
+/**
+ * read parsed rss feed result in a json string and render it with html marks then present it to user
+ */
 function readRss(url_id) {
     if(loading){
         alert("A request is being process, please try later");
@@ -234,10 +267,12 @@ function readRss(url_id) {
             $("#rssloading").hide();
             clearTimeout(timer); 
         }
-    });
-    
-    
+    });  
 }
+
+/**
+ * update user information and feed list in the page
+ */
 function refreshPage() {
     $("#cover").show();
     $.ajax({
@@ -252,7 +287,9 @@ function refreshPage() {
     });
 }
 
-
+/**
+ * regular expression for validating a legal url
+ */
 function isURL(str) {
     //regular expression to check if a given string is valid url
     var Exp = /^http(s)?:////([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;  
@@ -264,6 +301,9 @@ function isURL(str) {
     }
 } 
 
+/**
+ * render parsed rss feed result to the browser
+ */
 function renderRss(data) {
     
     var response = eval(data);
