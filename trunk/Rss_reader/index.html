@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/style.css">
+        <link href="css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
         <script src="./javascript/jquery-1.10.2.js"></script>
         <script src="./javascript/jquery-ui-1.10.4.custom.min.js"></script>
         <script src="./javascript/functions.js"></script>
@@ -20,6 +21,7 @@ and open the template in the editor.
             <div id="left">
                 <div id="left_1" class="left_div">
                     <img id="loading" src="./images/loading.gif" />
+                    <img id="loadingfeedlist" src="./images/loading.gif" />
                     <div id="error"></div>
                     <div id="user_panel"></div>
                     <div id='login'>
@@ -58,7 +60,7 @@ and open the template in the editor.
         
         
         
-        <div id='addFeedForm'>
+        <div id='addFeedForm' title="Add New Feed">
             Feed Name:<input type="text" id="newFeedName" name="newFeedName" />
             <br />
             Feed URL:<input type="text" id="newFeedURL" name="newFeedName" />

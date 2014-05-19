@@ -114,16 +114,16 @@ table#feeds{
     height: 566px;
     width: 648px;
     border: 4px solid skyblue;
-	/* No padding allowed */
+    /* No padding allowed */
 
 }
 #rsscontentlist{
-    
+
     width: 100%;
     height:100%;
-    
+
     border-right: 2px solid skyblue;
-    
+
     overflow-y:scroll;
     overflow-x: visible;
     -moz-border-radius: 0 15px 0 0 ;
@@ -136,45 +136,50 @@ table#feeds{
 
 
 #right .hsplitbar {
-	height: 6px;
-	background: #cca url(hgrabber.gif) no-repeat center;
-	/* No margin, border, or padding allowed */
+    height: 6px;
+    background: #cca url(hgrabber.gif) no-repeat center;
+    /* No margin, border, or padding allowed */
 }
 #right .hsplitbar.active, #right .hsplitbar:hover {
-	background: #e88 url(hgrabber.gif) no-repeat center;
+    background: #e88 url(hgrabber.gif) no-repeat center;
 }
 
 #rssloading {
-    
+
     position: absolute;
     top:20%;
     left: 50%;
-    
+
 }
 
 table#feedinfo{
     border: 1px;
-    
+
 }
 table#feedinfo tr{
     text-align: left;
-    
+
 }
 table#feedinfo tr td{
     border: 1px;
-    
+
 }
 
 .title{
     font-size: 20px;
-    
+
     font-weight: bold;
 }
 
 .link{
-    
+
 }
 
 .desciption{
-    
+
+}
+#loadingfeedlist{
+    position: absolute;
+    top: 55%;
+    left: 10%;
 }
