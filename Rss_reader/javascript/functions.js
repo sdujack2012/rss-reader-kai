@@ -66,7 +66,6 @@ function retriveData(data) {
     $("#loading").hide();
     var response = eval('(' + decodeURI(data) + ')');
     if (response.status == "good") {
-        
         var panel_info = "Welcome " + response.info.username;
         panel_info += " <input type='button' id='logout' value='Logout' />";
         panel_info += "<br /><br /><br /><input type='button'  id='addfeed' value='add New Feed' />";
@@ -248,6 +247,9 @@ function renderRss(data) {
         }
         feedinfo += "</table>";
         $("#rsscontentlist").html(feedinfo);    
+    }
+    else{
+        alert("Can't read the rss");
     }
     
 }
