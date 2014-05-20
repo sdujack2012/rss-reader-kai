@@ -147,6 +147,12 @@ function addLogoutListener() {
             success: function(data) {
                 initializeApp();
                 $("#error").html("Logout Successfully");
+
+            },
+            error: function(data) {
+                alert("Unkown Error");
+            },
+            complete: function(data) {
                 $("#rsscontentlist").html("");
             }
         });
@@ -186,7 +192,13 @@ function addNewFeedFormListener() {
                     }
                     alert(response.info);
                     refreshPage();
-                }
+                },
+                error: function(data) {
+                    alert("Unkown Error");
+                    $("#addFeedForm").dialog("close");
+                    $("#newFeedName").val("");
+                    $("#newFeedURL").val("");
+                },
             });
         }
         else {
@@ -219,6 +231,7 @@ function modifyFeed(feedname, feedurl, name_id, url_id, img_id) {
         data: "feedname=" + feedname + "&feedurl=" + feedurl + "&newfeedname=" + newfeedname + "&newfeedurl=" + newfeedurl,
         error: function(data) {
             $("#" + img_id).hide();
+            alert("Unkown Error");
         },
         success: function(data) {
             $("#" + img_id).hide();
@@ -250,6 +263,7 @@ function deleteFeed(feedname, feedurl) {
             },
             error: function(data) {
                 $("#cover").hide();
+                alert("Unkown Error");
             }
         });
     }
@@ -259,18 +273,13 @@ function deleteFeed(feedname, feedurl) {
  * read parsed rss feed result in a json string and render it with html marks then present it to user
  */
 function readRss(url_id) {
+    var timer;
     if (loading) {
         alert("A request is being process, please try later");
         return;
     }
     loading = true;
-    var timer = setTimeout(function() {
-        ajax.abort();
-        loading = false;
-        $("#rssloading").hide();
-        alert("Request Timeout");
-    },
-            15000);
+
     $("#rssloading").show();
     $("#rsscontentlist").html("");
     var feedurl = $("#" + url_id).val();
@@ -285,8 +294,17 @@ function readRss(url_id) {
             loading = false;
             $("#rssloading").hide();
             clearTimeout(timer);
+        },
+        error: function(data) {
+            alert("Unkown Error");
         }
     });
+    var timer = setTimeout(function() {
+        ajax.abort();
+        loading = false;
+        $("#rssloading").hide();
+        alert("Request Timeout");
+    }, 15000);
 }
 
 /**
@@ -302,6 +320,9 @@ function refreshPage() {
         },
         complete: function(data) {
             $("#cover").hide();
+        },
+        error: function(data) {
+            alert("Unkown Error");
         }
     });
 }
