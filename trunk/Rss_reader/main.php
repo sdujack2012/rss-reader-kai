@@ -54,7 +54,7 @@ if(isset($_SESSION['username'])){
 else{
     //deal with error
     $response['status'] = "error";
-    $response['info']="Session expired, Please log in again";   
+    $response['info']=  isset($_SESSION['error'])?$_SESSION['error']:"Session expired, Please log in again";   
 }
 
 echo json_encode($response);
