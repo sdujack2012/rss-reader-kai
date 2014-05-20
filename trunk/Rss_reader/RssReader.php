@@ -11,12 +11,12 @@ class RssReader {
     /**
      * feed url
      */
-    private $url;
+    private $url="";
 
     /**
      * an array containing parsed rss xml items
      */
-    private $RssArray;
+    private $RssArray=array();
 
     /**
      * cache path in which cached parsed rss data will be hold 

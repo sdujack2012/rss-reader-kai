@@ -11,12 +11,12 @@ class Feed {
     /**
      * map url filed in user_feed table
      */
-    public $url;
+    public $url="";
 
     /**
      * map feedname in user_feed table
      */
-    public $feedname;
+    public $feedname="";
 
     public function __construct($url, $feedname) {
         $this->url = trim($url);
