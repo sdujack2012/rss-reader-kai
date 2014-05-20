@@ -14,12 +14,12 @@ class User {
     /**
      * map username filed in rss_user table
      */
-    public $username;
+    public $username="";
 
     /**
      * map password filed in rss_user table
      */
-    public $password;
+    public $password="";
 
     /**
      * containing all feed associated with the user
