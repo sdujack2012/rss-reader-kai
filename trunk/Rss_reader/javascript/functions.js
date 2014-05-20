@@ -1,5 +1,6 @@
 var loading = false;
-var img=new Image();
+var img = new Image();
+var initialized = false;
 $(function() {
     initializeApp();
 });
@@ -7,7 +8,7 @@ $(function() {
  * initialize all the resource needed for the application
  */
 function initializeApp() {
-    img.src="./images/updating.gif";
+    img.src = "./images/updating.gif";
     $("#error").html("");
     $("#feedlist").html("");
     $("#loginbutton").click(function() {
@@ -41,7 +42,7 @@ function initializeApp() {
     //addNewFeedListener();
     addNewFeedFormListener();
     refreshPage();
-    $("#addFeedForm").dialog({modal: true, autoOpen: false,height: 180,width:320});
+    $("#addFeedForm").dialog({modal: true, autoOpen: false, height: 180, width: 320});
 }
 
 /**
@@ -81,12 +82,14 @@ function login(username, password) {
  */
 function retriveData(data) {
     $("#loading").hide();
-    try{
-        var response = eval('(' + decodeURI(data) + ')');
-    }
-    catch(e){
+    var response = json_decode(data);
+    if (!response) {
         alert("can't retrieve user information, try later");
+        $("#login").show();
+        $("#user_panel").html("");
+        return;
     }
+
     if (response.status == "good") {
         var panel_info = "Welcome " + response.info.username;
         panel_info += " <input type='button' id='logout' value='Logout' />";
@@ -96,20 +99,20 @@ function retriveData(data) {
         for (var i = 0; i < feeds.length; i++) {
             var name_id = "feedname" + i;
             var url_id = "feedurl" + i;
-            var img_id="img"+i;
+            var img_id = "img" + i;
             feedlist += "<tr><td>";
             feedlist += "Feed Name:<input type='text'  id='" + name_id + "' value='" + feeds[i].feedname + "' /><br />";
             feedlist += "Feed Url:<input type='text'  id='" + url_id + "' title='" + feeds[i].url + "' value='" + feeds[i].url + "' /><br />";
-            feedlist += "<input type='button' value='Modify' onclick=modifyFeed('" + feeds[i].feedname + "','" + feeds[i].url + "','" + name_id + "','" + url_id + "','"+img_id+"'); />&nbsp;&nbsp;";
+            feedlist += "<input type='button' value='Modify' onclick=modifyFeed('" + feeds[i].feedname + "','" + feeds[i].url + "','" + name_id + "','" + url_id + "','" + img_id + "'); />&nbsp;&nbsp;";
             feedlist += "<input type='button' value='Delete' onclick=deleteFeed('" + feeds[i].feedname + "','" + feeds[i].url + "'); />&nbsp;&nbsp;";
             feedlist += "<input type='button' value='Read' onclick=readRss('" + url_id + "'); />&nbsp;&nbsp;";
-            feedlist += "<img id='"+img_id+"' class='updating' width='20px' height='20px' src='"+img.src+"'>";
+            feedlist += "<img id='" + img_id + "' class='updating' width='20px' height='20px' src='" + img.src + "'>";
             feedlist += "</td></tr>";
         }
-        
+
         feedlist += "</table>";
         $("#user_panel").html(panel_info);
-        
+
         $("#user_panel").show();
         $("#feedlist").html(feedlist);
         $(".updating").hide();
@@ -119,7 +122,15 @@ function retriveData(data) {
     }
     else {
         $("#login").show();
-        $("#error").html(response.info);
+        $("#user_panel").html("");
+        $("#rsscontentlist").html("");
+        if (initialized == true) {
+            $("#error").html(response.info);
+        }
+        else {
+            initialized = true;
+        }
+
     }
 }
 
@@ -136,7 +147,7 @@ function addLogoutListener() {
             success: function(data) {
                 initializeApp();
                 $("#error").html("Logout Successfully");
-                $("#rsscontentlist").html("");   
+                $("#rsscontentlist").html("");
             }
         });
     });
@@ -157,7 +168,6 @@ function addNewFeedListener() {
  */
 function addNewFeedFormListener() {
     $("#addfeedbutton").click(function() {
-
         var feedname = $("#newFeedName").val();
         var feedurl = $("#newFeedURL").val();
         if (isURL(feedurl) && feedname != "") {
@@ -166,10 +176,15 @@ function addNewFeedFormListener() {
                 url: "addNewFeed.php",
                 data: "feedname=" + feedname + "&feedurl=" + feedurl,
                 success: function(data) {
-                    alert(data);
                     $("#addFeedForm").dialog("close");
                     $("#newFeedName").val("");
                     $("#newFeedURL").val("");
+                    var response = json_decode(data);
+                    if (!response) {
+                        alert("Unkown Error");
+                        return;
+                    }
+                    alert(response.info);
                     refreshPage();
                 }
             });
@@ -177,7 +192,7 @@ function addNewFeedFormListener() {
         else {
             alert("Please enter valid Rss url and non-empty name!");
         }
-       
+
     });
 
     $("#closefeedbutton").click(function() {
@@ -189,10 +204,10 @@ function addNewFeedFormListener() {
 /**
  * handle 'modify feed event'
  */
-function modifyFeed(feedname, feedurl, name_id, url_id,img_id) {
+function modifyFeed(feedname, feedurl, name_id, url_id, img_id) {
     var newfeedname = $("#" + name_id).val();
     var newfeedurl = $("#" + url_id).val();
-    if(!isURL(newfeedurl)){
+    if (!isURL(newfeedurl)) {
         alert("Dont input invalid url");
         refreshPage();
         return;
@@ -203,13 +218,18 @@ function modifyFeed(feedname, feedurl, name_id, url_id,img_id) {
         url: "modifyFeed.php",
         data: "feedname=" + feedname + "&feedurl=" + feedurl + "&newfeedname=" + newfeedname + "&newfeedurl=" + newfeedurl,
         error: function(data) {
-            
             $("#" + img_id).hide();
-             
         },
         success: function(data) {
             $("#" + img_id).hide();
-            alert(data);
+            var response = json_decode(data);
+            if (!response) {
+                alert("Unkown Error");
+                return;
+            }
+            if (response.status == "good") {
+                alert(response.info);
+            }
             refreshPage();
         }
     });
@@ -219,7 +239,7 @@ function modifyFeed(feedname, feedurl, name_id, url_id,img_id) {
  * handle 'delete feed event'
  */
 function deleteFeed(feedname, feedurl) {
-    if(confirm('Do you really want to delete the feed?')){
+    if (confirm('Do you really want to delete the feed?')) {
         $("#cover").show();
         $.ajax({
             type: "post",
@@ -229,7 +249,7 @@ function deleteFeed(feedname, feedurl) {
                 refreshPage();
             },
             error: function(data) {
-               $("#cover").hide();
+                $("#cover").hide();
             }
         });
     }
@@ -239,18 +259,18 @@ function deleteFeed(feedname, feedurl) {
  * read parsed rss feed result in a json string and render it with html marks then present it to user
  */
 function readRss(url_id) {
-    if(loading){
+    if (loading) {
         alert("A request is being process, please try later");
         return;
     }
     loading = true;
-    var timer = setTimeout(function(){
-        ajax.abort(); 
+    var timer = setTimeout(function() {
+        ajax.abort();
         loading = false;
         $("#rssloading").hide();
         alert("Request Timeout");
     },
-    15000);
+            15000);
     $("#rssloading").show();
     $("#rsscontentlist").html("");
     var feedurl = $("#" + url_id).val();
@@ -260,14 +280,13 @@ function readRss(url_id) {
         data: "feedurl=" + feedurl,
         success: function(data) {
             renderRss(data);
-            
         },
-        complete:function(data) {
+        complete: function(data) {
             loading = false;
             $("#rssloading").hide();
-            clearTimeout(timer); 
+            clearTimeout(timer);
         }
-    });  
+    });
 }
 
 /**
@@ -281,7 +300,7 @@ function refreshPage() {
         success: function(data) {
             retriveData(data);
         },
-        complete:function(data) {
+        complete: function(data) {
             $("#cover").hide();
         }
     });
@@ -299,29 +318,45 @@ function isURL(str) {
     } else {
         return false;
     }
-} 
-
+}
+function json_decode(data) {
+    var response;
+    try {
+        response = eval('(' + data + ')');
+    }
+    catch (e) {
+        return false;
+    }
+    return response;
+}
 /**
  * render parsed rss feed result to the browser
  */
 function renderRss(data) {
-    
-    var response = eval(data);
-    if (typeof response[0]=='object') {
+    var response = json_decode(data);
+    if (!response) {
+        alert("Unkown Error");
+        return;
+    }
+    if (response.status == "good") {
+        response = response.info;
         var feedinfo = "<table id='feedinfo'>"
         for (var i = 0; i < response.length; i++) {
             feedinfo += "<tr><td>";
-            feedinfo += "<div class='title'>"+response[i].title+"</div>";
-            feedinfo += "<div class='link'><a  target='_blank' href='"+response[i].link+"'>"+response[i].link+"</a></div>";
-            feedinfo += "<div class='description'>"+response[i].description.substr(0,200) +"</div>";
+            feedinfo += "<div class='title'>" + response[i].title + "</div>";
+            feedinfo += "<div class='link'><a  target='_blank' href='" + response[i].link + "'>" + response[i].link + "</a></div>";
+            feedinfo += "<div class='description'>" + response[i].description.substr(0, 200) + "</div>";
             feedinfo += "<hr />";
             feedinfo += "</td></tr>";
         }
         feedinfo += "</table>";
-        $("#rsscontentlist").html(feedinfo);    
+        $("#rsscontentlist").html(feedinfo);
     }
-    else{
+    else if (response.info == "rss") {
         alert("Can't read the rss");
     }
-    
+    else if (response.info == "unkown") {
+        refreshPage();
+    }
+
 }

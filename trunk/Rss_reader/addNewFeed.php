@@ -2,7 +2,7 @@
 include 'User.php';
 
 session_start();
-
+$response = array();
 //check is a user has login and all other information need with post method
 if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['feedname']) && isset($_POST['feedurl'])) {
     $user = new User();
@@ -13,9 +13,16 @@ if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST" && isse
     $feedurl = trim($_POST['feedurl']);
     $feed = new Feed($feedurl,$feedname);
     if ($user->addFeeds($feed)) {
-        echo "Feed added";
+        $response['status'] = "good";
+        $response['info']="Feed added";
     } else {
-        echo "Can't Add the feed, please try later";
-    }
-    
+        $response['status'] = "error";
+        $response['info']="Can't Add the feed, please try later";
+    } 
 }
+else{
+    $response['status'] = "error";
+    $response['info']="Unknow Error";
+}
+echo json_encode($response);
+?>

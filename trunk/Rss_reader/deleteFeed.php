@@ -1,6 +1,7 @@
 <?php
 include 'User.php';
 session_start();
+$response = array();
 //check is a user has login and all other information needed for delete a feed with post method
 if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['feedname']) && isset($_POST['feedurl'])) {
     $user = new User();
@@ -10,9 +11,18 @@ if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST" && isse
     $feedname = $_POST['feedname'];
     $feedurl = $_POST['feedurl'];
     if ($user->deleteFeed($feedname, $feedurl)) {
-        echo "Feed deleted successfully";
+        $response['status'] = "good";
+        $response['info']="Feed deleted successfully";
+       
     } else {
-        echo "Can't delete the feed, please try later";
-    }
-    
+        $response['status'] = "error";
+        $response['info']="Can't delete the feed, please try later";
+       
+    }  
 }
+else{
+    $response['status'] = "error";
+    $response['info']="Unkown Error"; 
+}
+
+echo json_encode($response);
