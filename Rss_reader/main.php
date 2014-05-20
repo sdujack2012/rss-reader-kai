@@ -1,6 +1,7 @@
 <?php
 include 'User.php';
 session_start();
+$response = array();
 if(!isset($_SESSION['username'])&&$_SERVER['REQUEST_METHOD']=="POST"&&isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['action'])){
     $user = new User();
     $user->username = $_POST['username'];
@@ -40,7 +41,7 @@ if(isset($_SESSION['username'])){
     //retrieve feeds owned by the user
     $feedlist = $user->retrieveFeedList();
     
-    $response = array();
+
     //constructing response
     $response['status'] = "good";
     $info = array();
@@ -48,17 +49,16 @@ if(isset($_SESSION['username'])){
     $info['feedlist']=$feedlist;
     $response['info']= $info;
     //convert the response into a json string and return it to user
-    echo json_encode($response);
+    
 }
 else{
     //deal with error
     $response['status'] = "error";
-    $response['info']=isset ($_SESSION['error'])?$_SESSION['error']:"";
-    echo json_encode($response);
+    $response['info']="Session expired, Please log in again";   
 }
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+echo json_encode($response);
+
+?>
+
 
